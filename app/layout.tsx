@@ -2,14 +2,34 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
 
+const fallbackSiteOrigin = "https://steel-signal.example";
+
+function resolveSiteOrigin(value: string | undefined): string {
+  if (!value || value !== value.trim()) {
+    return fallbackSiteOrigin;
+  }
+
+  try {
+    const url = new URL(value);
+    const isCanonicalHttpsOrigin =
+      url.protocol === "https:" &&
+      !url.username &&
+      !url.password &&
+      url.pathname === "/" &&
+      !url.search &&
+      !url.hash;
+
+    return isCanonicalHttpsOrigin ? url.origin : fallbackSiteOrigin;
+  } catch {
+    return fallbackSiteOrigin;
+  }
+}
+
 export async function generateMetadata(): Promise<Metadata> {
-  const incoming = await headers();
-  const protocol = incoming.get("x-forwarded-proto") ?? "https";
-  const host =
-    incoming.get("x-forwarded-host") ??
-    incoming.get("host") ??
-    "localhost:3000";
-  const origin = `${protocol}://${host}`;
+  // Keep metadata request-time so Sites runtime environment updates are read
+  // without rebuilding, while never deriving canonical URLs from the request.
+  await headers();
+  const origin = resolveSiteOrigin(process.env.SITE_ORIGIN);
 
   return {
     title: "STEEL SIGNAL | 금리와 철강 가격의 흐름",
