@@ -78,7 +78,7 @@ export function useIndicatorData(): IndicatorDataState & {
 
   useEffect(() => {
     isMounted.current = true;
-    void load();
+    void Promise.resolve().then(load);
     return () => {
       isMounted.current = false;
       requestId.current += 1;
