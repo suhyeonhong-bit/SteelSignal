@@ -16,6 +16,14 @@ function response(body: string): Response {
   } as Response;
 }
 
+function deferred<T>() {
+  let resolve!: (value: T) => void;
+  const promise = new Promise<T>((promiseResolve) => {
+    resolve = promiseResolve;
+  });
+  return { promise, resolve };
+}
+
 afterEach(() => {
   vi.unstubAllGlobals();
 });
@@ -62,5 +70,58 @@ describe("useIndicatorData", () => {
     const { result } = renderHook(() => useIndicatorData());
     await waitFor(() => expect(result.current.status).toBe("error"));
     expect(result.current.errorKind).toBe("format");
+  });
+
+  it("keeps a newer retry result when the earlier request finishes later", async () => {
+    const initial = deferred<Response>();
+    const retry = deferred<Response>();
+    const fetchMock = vi
+      .fn()
+      .mockReturnValueOnce(initial.promise)
+      .mockReturnValueOnce(retry.promise);
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useIndicatorData());
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
+    let retryPromise!: Promise<void>;
+    act(() => {
+      retryPromise = result.current.retry();
+    });
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
+
+    await act(async () => {
+      retry.resolve(response(CSV));
+      await retryPromise;
+    });
+    expect(result.current.rawCsv).toBe(CSV);
+
+    await act(async () => {
+      initial.resolve(
+        response(
+          "month,korea_base_rate_percent,us_steel_ppi_index\n" +
+            "2026-05,2.0,350.000\n",
+        ),
+      );
+      await initial.promise;
+    });
+    expect(result.current.rawCsv).toBe(CSV);
+  });
+
+  it("does not consume a request settled after unmount cleanup", async () => {
+    const pending = deferred<Response>();
+    const text = vi.fn().mockResolvedValue(CSV);
+    const fetchMock = vi.fn().mockReturnValue(pending.promise);
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { unmount } = renderHook(() => useIndicatorData());
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    unmount();
+
+    await act(async () => {
+      pending.resolve({ ok: true, text } as Response);
+      await pending.promise;
+    });
+    expect(text).not.toHaveBeenCalled();
   });
 });

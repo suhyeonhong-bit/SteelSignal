@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   IndicatorDataError,
   type IndicatorRow,
@@ -44,16 +44,29 @@ export function useIndicatorData(): IndicatorDataState & {
   retry: () => Promise<void>;
 } {
   const [state, setState] = useState<IndicatorDataState>(LOADING);
+  const isMounted = useRef(false);
+  const requestId = useRef(0);
 
   const load = useCallback(async () => {
+    if (!isMounted.current) return;
+
+    const currentRequestId = requestId.current + 1;
+    requestId.current = currentRequestId;
+    const isCurrentRequest = () =>
+      isMounted.current && requestId.current === currentRequestId;
+
     setState(LOADING);
     try {
       const response = await fetch(INDICATOR_CSV_URL, { cache: "no-store" });
+      if (!isCurrentRequest()) return;
       if (!response.ok) throw new Error("network");
       const rawCsv = await response.text();
+      if (!isCurrentRequest()) return;
       const rows = parseIndicatorCsv(rawCsv);
+      if (!isCurrentRequest()) return;
       setState({ status: "success", rows, rawCsv, errorKind: null });
     } catch (error) {
+      if (!isCurrentRequest()) return;
       setState({
         status: "error",
         rows: [],
@@ -64,7 +77,12 @@ export function useIndicatorData(): IndicatorDataState & {
   }, []);
 
   useEffect(() => {
+    isMounted.current = true;
     void load();
+    return () => {
+      isMounted.current = false;
+      requestId.current += 1;
+    };
   }, [load]);
 
   return { ...state, retry: load };
