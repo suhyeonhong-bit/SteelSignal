@@ -210,7 +210,7 @@ export default function Home() {
   return (
     <main className="site-shell">
       <header className="site-header"><a className="wordmark" href="#top">STEEL <span>SIGNAL</span></a><span className="header-meta">{latestMonth === "—" ? "MONTHLY BRIEF" : `${displayMonth(latestMonth)} DATA`}</span></header>
-      <div className="hero" id="top"><p className="eyebrow">MARKET BRIEF / 01</p><h1>금리와 철강 가격의<br /><em>흐름을 한눈에</em></h1><p className="hero-copy">한국과 미국의 금리, 철강 생산자물가를 한 화면에 놓고 시장의 방향과 시차를 읽어보세요.</p></div>
+      <div className="hero" id="top"><p className="eyebrow">MARKET BRIEF / 01</p><h1>금리와 철강 가격의<br /><em>흐름을 한눈에</em></h1><p className="hero-copy">한국과 미국의 금리, 철강 생산자물가를 한 화면에<br />놓고 시장의 방향과 시차를 읽어보세요.</p></div>
       {status === "loading" && <LoadingShell />}
       {status === "error" && <div className="state-panel error-panel" role="alert"><strong>{errorMessage}</strong><a href={CSV_URL} target="_blank" rel="noreferrer">원본 CSV 열기</a><button className="retry-button" type="button" onClick={loadData}>다시 시도</button></div>}
       {status !== "ready" && <DataGuide />}
