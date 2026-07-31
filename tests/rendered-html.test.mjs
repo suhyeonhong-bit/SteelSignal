@@ -74,3 +74,20 @@ test("parses the four-column monthly indicator CSV", async () => {
     },
   ]);
 });
+
+test("keeps loading legacy three-column CSVs while Fed data rolls out", async () => {
+  const { parseIndicatorCsv } = await import(
+    "../app/lib/indicator-data.mjs"
+  );
+  const rows = parseIndicatorCsv(
+    "month,korea_base_rate_percent,us_steel_ppi_index\n" +
+      "2026-02,2.5,359.1\n",
+  );
+
+  assert.deepEqual(rows[0], {
+    month: "2026-02",
+    koreaBaseRate: 2.5,
+    usSteelPpi: 359.1,
+    usFedTargetRate: null,
+  });
+});
