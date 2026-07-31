@@ -56,7 +56,12 @@ function parseNumber(value) {
 export function parseIndicatorCsv(text) {
   const records = parseRecords(text);
   const header = records.shift();
-  if (!header || INDICATOR_HEADERS.some((name, index) => header[index] !== name)) {
+  const legacyHeaders = INDICATOR_HEADERS.slice(0, 3);
+  const validHeader =
+    header &&
+    (INDICATOR_HEADERS.every((name, index) => header[index] === name) ||
+      legacyHeaders.every((name, index) => header[index] === name));
+  if (!validHeader) {
     throw new Error("필수 데이터 열을 찾을 수 없습니다.");
   }
 

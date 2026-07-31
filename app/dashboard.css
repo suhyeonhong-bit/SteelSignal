@@ -16,6 +16,7 @@ a { color: inherit; }
 .hero h1 em { color: var(--copper); font-style: normal; }
 .hero-copy { color: #53616c; font-size: 17px; line-height: 1.7; margin: 26px 0 0; max-width: 530px; }
 .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 14px; }
+.metric-grid + .chart-panel { margin-top: 32px; }
 .metric-card, .panel { background: rgba(255, 253, 248, .66); border: 1px solid var(--line); border-radius: 18px; }
 .metric-card { min-height: 214px; padding: 26px; position: relative; }
 .metric-card-topline { align-items: center; color: var(--muted); display: flex; font-family: var(--font-geist-mono), monospace; font-size: 11px; gap: 9px; letter-spacing: .04em; }
