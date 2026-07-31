@@ -35,6 +35,8 @@ test("server-renders the STEEL SIGNAL dashboard shell", async () => {
   assert.match(html, /미국 철강 PPI/);
   assert.match(html, /연준 목표금리/);
   assert.match(html, /읽는 법/);
+  assert.match(html, /금리와 원자재 가격의 관계/);
+  assert.match(html, /IMF 연구 원문/);
   assert.match(html, /원본에 가까운 보기/);
   assert.doesNotMatch(html, /Your site is taking shape/);
   assert.doesNotMatch(html, /codex-preview/);

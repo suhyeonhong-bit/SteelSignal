@@ -147,6 +147,17 @@ function DataGuide() {
         <div><span className="guide-index">02</span><h3>시차를 보세요</h3><p>금리 결정과 물가 발표일은 다릅니다. 한 달의 움직임이 같은 원인에서 나온다고 단정하지 않습니다.</p></div>
         <div><span className="guide-index">03</span><h3>원본을 확인하세요</h3><p>아래 표는 그래프의 기초가 된 월별 값입니다. 결측값은 추정하지 않고 대시로 남겼습니다.</p></div>
       </div>
+      <div className="relationship-note">
+        <h3>금리와 원자재 가격의 관계</h3>
+        <p>대체로 금리가 오르면 원자재 가격이 약해지는 경향이 있지만, 고정된 법칙은 아닙니다.</p>
+        <ol>
+          <li>금리 상승 → 경기·투자·건설 수요 둔화 → 원자재 수요 감소</li>
+          <li>금리 상승 → 달러 강세 → 달러로 거래되는 원자재 가격 하락 압력</li>
+          <li>금리 상승 → 재고 보유 비용 증가 → 원자재 재고 축소</li>
+        </ol>
+        <p>전쟁·감산·공급망 차질이나 강한 글로벌 수요가 금리 효과를 압도할 수 있습니다. 철강 PPI는 금리 변화 후 1~6개월의 시차를 두고 경기·건설·제조업 수요와 함께 보세요.</p>
+        <p className="relationship-source">미국 정책금리 10bp 상승이 약 18~24영업일 뒤 원자재 가격을 0.5~2.5% 낮출 수 있다는 IMF 연구를 참고했습니다. <a href="https://www.imf.org/en/publications/wp/issues/2023/10/10/monetary-policy-transmission-through-commodity-prices-540373" target="_blank" rel="noreferrer">IMF 연구 원문</a></p>
+      </div>
       <div className="source-links"><span>출처</span><a href="https://ecos.bok.or.kr/" target="_blank" rel="noreferrer">한국은행 ECOS</a><a href="https://fred.stlouisfed.org/" target="_blank" rel="noreferrer">미국 FRED</a><a href="https://github.com/suhyeonhong-bit/ToSuhyeon" target="_blank" rel="noreferrer">공개 데이터 저장소</a></div>
     </section>
   );

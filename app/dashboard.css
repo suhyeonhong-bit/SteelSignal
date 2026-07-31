@@ -43,6 +43,14 @@ a { color: inherit; }
 .guide-grid h3 { font-size: 16px; margin: 12px 0 7px; }
 .guide-grid p { color: #afbac0; font-size: 13px; line-height: 1.65; margin: 0; }
 .guide-index { color: #d79a76; font-family: var(--font-geist-mono), monospace; font-size: 11px; }
+.relationship-note { border-top: 1px solid rgba(255,255,255,.18); margin-top: 28px; padding-top: 26px; }
+.relationship-note h3 { font-size: 16px; margin: 0 0 10px; }
+.relationship-note p, .relationship-note li { color: #afbac0; font-size: 13px; line-height: 1.7; }
+.relationship-note p { margin: 0 0 10px; }
+.relationship-note ol { margin: 12px 0 14px; padding-left: 20px; }
+.relationship-note li { padding-left: 4px; }
+.relationship-source { border-left: 2px solid #d79a76; padding-left: 12px; }
+.relationship-note a { color: #f6f0e6; text-underline-offset: 4px; }
 .source-links { align-items: center; display: flex; flex-wrap: wrap; gap: 16px; margin-top: 22px; }
 .source-links span { color: #83919a; font-family: var(--font-geist-mono), monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
 .source-links a { color: #f6f0e6; font-size: 12px; text-decoration-color: rgba(255,255,255,.3); text-underline-offset: 4px; }
