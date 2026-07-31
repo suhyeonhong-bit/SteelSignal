@@ -48,7 +48,9 @@ describe("SteelSignalDashboard", () => {
       retry: vi.fn(),
     });
     render(<SteelSignalDashboard />);
-    expect(screen.getByText("STEEL SIGNAL")).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "STEEL SIGNAL" }),
+    ).toBeInTheDocument();
     expect(
       screen.getByText("최신 데이터를 불러오고 있습니다."),
     ).toBeInTheDocument();

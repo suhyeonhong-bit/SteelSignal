@@ -8,6 +8,7 @@ import {
   getLatestDataMonth,
   getLatestMetric,
 } from "../lib/indicator-data";
+import { BrandMark } from "./BrandMark";
 import { DashboardError } from "./DashboardError";
 import { DashboardLoading } from "./DashboardLoading";
 import { DataGuide } from "./DataGuide";
@@ -22,13 +23,18 @@ export function SteelSignalDashboard() {
   return (
     <main className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#top">
-          STEEL SIGNAL
+        <a className="brand" href="#top" aria-label="STEEL SIGNAL">
+          <BrandMark />
+          <span className="brand-name">
+            <span>STEEL</span> <span className="brand-accent">SIGNAL</span>
+          </span>
         </a>
         {data.status === "success" ? (
-          <span>{formatMonth(getLatestDataMonth(data.rows))} 데이터 기준</span>
+          <span className="header-note">
+            {formatMonth(getLatestDataMonth(data.rows))} 데이터 기준
+          </span>
         ) : (
-          <span>공개 경제지표 대시보드</span>
+          <span className="header-note">공개 경제지표 대시보드</span>
         )}
       </header>
 

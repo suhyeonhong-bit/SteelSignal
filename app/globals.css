@@ -37,12 +37,17 @@ button:focus-visible, a:focus-visible {
   font-size: .875rem;
 }
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--navy);
   font-weight: 900;
   letter-spacing: .09em;
   text-decoration: none;
 }
-.site-header span {
+.brand-mark { width: 26px; height: 26px; flex: none; }
+.brand-accent { color: var(--copper-text); }
+.header-note {
   border: 1px solid rgba(23, 37, 59, .2);
   border-radius: 999px;
   padding: 7px 11px;
@@ -225,7 +230,7 @@ tbody th { font-weight: 700; }
 @media (max-width: 800px) {
   .site-shell { width: min(100% - 24px, 680px); }
   .site-header { align-items: flex-start; gap: 12px; padding: 18px 0; }
-  .site-header span { font-size: .72rem; }
+  .header-note { font-size: .72rem; }
   .hero { padding: 52px 0 32px; }
   .metric-grid, .detail-grid, .site-footer { grid-template-columns: 1fr; }
   .panel-heading { align-items: stretch; flex-direction: column; }

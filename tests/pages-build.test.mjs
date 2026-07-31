@@ -48,6 +48,22 @@ test("ships the social card and exact public CSV runtime URL", async () => {
   );
 });
 
+test("ships brand icons wired to the project base path", async () => {
+  const html = await readFile(new URL("index.html", output), "utf8");
+
+  for (const [rel, file] of [
+    ["icon", "favicon.svg"],
+    ["icon", "favicon-32.png"],
+    ["apple-touch-icon", "apple-touch-icon.png"],
+  ]) {
+    const escaped = file.replace(".", "\\.");
+    assert.match(html, new RegExp(`rel="${rel}"[^>]*href="/SteelSignal/${escaped}"`));
+
+    const icon = await stat(path.join(outputPath, file));
+    assert.ok(icon.size > 0, `${file} must ship with content`);
+  }
+});
+
 test("does not place local configuration or source-control data in the artifact", async () => {
   const files = (await walk(outputPath)).map((file) =>
     path.relative(outputPath, file),
