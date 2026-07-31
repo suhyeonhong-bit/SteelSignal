@@ -1,11 +1,5 @@
 import assert from "node:assert/strict";
-import { access, readFile, readdir } from "node:fs/promises";
 import test from "node:test";
-
-const developmentPreviewMeta =
-  /<meta(?=[^>]*\bname=["']codex-preview["'])(?=[^>]*\bcontent=["']development["'])[^>]*>/i;
-const templateRoot = new URL("../", import.meta.url);
-const previewRoot = new URL("../app/_sites-preview/", import.meta.url);
 
 async function render() {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -28,64 +22,55 @@ async function render() {
   );
 }
 
-test("server-renders the starter loading skeleton", async () => {
+test("server-renders the STEEL SIGNAL dashboard shell", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, developmentPreviewMeta);
-  assert.match(html, /<title>Your site is taking shape<\/title>/i);
-  assert.match(html, /Building your site/);
-  assert.match(html, /Your site is taking shape/);
-  assert.match(
-    html,
-    /Your first version will appear here automatically when it’s ready\./,
-  );
-  assert.doesNotMatch(html, /Codex/);
-  assert.match(html, /react-loading-skeleton/);
-  assert.match(html, /role="status"/);
+  assert.match(html, /<title>STEEL SIGNAL/);
+  assert.match(html, /금리와 철강 가격의/);
+  assert.match(html, /흐름을 한눈에/);
+  assert.match(html, /한국 기준금리/);
+  assert.match(html, /미국 철강 PPI/);
+  assert.match(html, /연준 목표금리/);
+  assert.match(html, /읽는 법/);
+  assert.match(html, /원본에 가까운 보기/);
+  assert.doesNotMatch(html, /Your site is taking shape/);
+  assert.doesNotMatch(html, /codex-preview/);
 });
 
-test("keeps the loading skeleton scoped and disposable", async () => {
-  const [preview, css, page, layout, packageJson, files] = await Promise.all([
-    readFile(new URL("SkeletonPreview.tsx", previewRoot), "utf8"),
-    readFile(new URL("preview.css", previewRoot), "utf8"),
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../package.json", import.meta.url), "utf8"),
-    readdir(previewRoot),
+test("keeps the reading guide above the source-like table", async () => {
+  const response = await render();
+  const html = await response.text();
+  const guideIndex = html.indexOf("읽는 법");
+  const tableIndex = html.indexOf("원본에 가까운 보기");
+  assert.ok(guideIndex >= 0 && tableIndex > guideIndex);
+  assert.match(html, /연준 목표금리/);
+});
+
+test("parses the four-column monthly indicator CSV", async () => {
+  const { parseIndicatorCsv } = await import(
+    "../app/lib/indicator-data.mjs"
+  );
+  const rows = parseIndicatorCsv(
+    "month,korea_base_rate_percent,us_steel_ppi_index,us_fed_target_rate_percent\n" +
+      "2026-02,2.5,359.1,4.25\n" +
+      "2026-01,,355.2,4.25\n",
+  );
+
+  assert.deepEqual(rows, [
+    {
+      month: "2026-01",
+      koreaBaseRate: null,
+      usSteelPpi: 355.2,
+      usFedTargetRate: 4.25,
+    },
+    {
+      month: "2026-02",
+      koreaBaseRate: 2.5,
+      usSteelPpi: 359.1,
+      usFedTargetRate: 4.25,
+    },
   ]);
-
-  assert.deepEqual(files.sort(), ["SkeletonPreview.tsx", "preview.css"]);
-  assert.match(preview, /from "react-loading-skeleton"/);
-  assert.match(preview, /baseColor="#eceae7"/);
-  assert.match(preview, /highlightColor="#f9f8f6"/);
-  assert.match(preview, /duration=\{2\.8\}/);
-  assert.match(preview, /sites-skeleton-search-placeholder/);
-  assert.match(packageJson, /"react-loading-skeleton": "3\.5\.0"/);
-
-  const shellIndex = preview.indexOf('className="sites-skeleton-shell"');
-  const statusIndex = preview.indexOf('className="sites-skeleton-status"');
-  assert.ok(shellIndex >= 0 && statusIndex > shellIndex);
-  assert.match(css, /position:\s*fixed/);
-  assert.match(css, /inset:\s*0/);
-  assert.match(css, /opacity:\s*0\.52/);
-  assert.match(css, /prefers-reduced-motion:\s*reduce/);
-  assert.doesNotMatch(css, /#020617|canvas|pets|progress/i);
-  assert.doesNotMatch(
-    preview,
-    /loading-spinner|status-mark|status-progress|canvas|cookie|random/i,
-  );
-
-  assert.match(page, /export const metadata:\s*Metadata/);
-  assert.match(page, /"codex-preview": "development"/);
-  assert.match(page, /<SkeletonPreview \/>/);
-  assert.match(layout, /title:\s*"Starter Project"/);
-  assert.doesNotMatch(layout, /codex-preview|_sites-preview|themeColor|\bViewport\b/);
-  assert.doesNotMatch(css, /(^|\s)(html|body)\s*\{/m);
-
-  await assert.rejects(
-    access(new URL("public/_sites-preview", templateRoot)),
-  );
 });
