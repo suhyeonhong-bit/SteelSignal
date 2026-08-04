@@ -19,15 +19,22 @@ async function walk(directory) {
 }
 
 test("builds the GitHub Pages artifact", async () => {
-  const html = await readFile(new URL("index.html", output), "utf8");
-  assert.match(html, /lang="ko"/);
-  assert.match(html, /STEEL SIGNAL/);
-  assert.match(html, /\/SteelSignal\/assets\/[^"']+\.js/);
+  const arcticHtml = await readFile(new URL("index.html", output), "utf8");
+  const steelHtml = await readFile(new URL("steel/index.html", output), "utf8");
+  assert.match(arcticHtml, /lang="ko"/);
+  assert.match(arcticHtml, /북극 에너지 패권/);
+  assert.match(arcticHtml, /property="og:image" content="https:\/\/suhyeonhong-bit\.github\.io\/SteelSignal\/arctic-og\.png"/);
+  assert.match(arcticHtml, /\/SteelSignal\/assets\/[^"']+\.js/);
+  assert.match(steelHtml, /STEEL SIGNAL/);
+  assert.match(steelHtml, /\/SteelSignal\/assets\/[^"']+\.js/);
 
   const files = await walk(outputPath);
   const contents = (
     await Promise.all(files.filter((file) => /\.(?:html|js|css)$/.test(file)).map((file) => readFile(file, "utf8")))
   ).join("\n");
   assert.match(contents, /raw\.githubusercontent\.com\/suhyeonhong-bit\/ToSuhyeon/);
+  assert.match(contents, /arctic_dashboard\.json/);
+  assert.match(contents, /북극 에너지 패권/);
+  assert.match(contents, /금리와 철강 가격의 흐름을 한눈에/);
   assert.doesNotMatch(contents, /FRED_API_KEY|ECOS_API_KEY|OAI-Sites-Authorization/);
 });

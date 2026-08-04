@@ -1,4 +1,4 @@
-name: Deploy STEEL SIGNAL to GitHub Pages
+name: Deploy Research Dashboards to GitHub Pages
 
 on:
   push:
@@ -27,6 +27,10 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
+      - name: Verify application build
+        run: npm test
+      - name: Lint source
+        run: npm run lint
       - name: Build and verify Pages artifact
         run: npm run test:pages
       - name: Configure Pages
