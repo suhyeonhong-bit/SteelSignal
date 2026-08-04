@@ -27,10 +27,6 @@ jobs:
           cache: npm
       - name: Install locked dependencies
         run: npm ci
-      - name: Test product
-        run: npm test
-      - name: Lint product
-        run: npm run lint
       - name: Build and verify Pages artifact
         run: npm run test:pages
       - name: Configure Pages

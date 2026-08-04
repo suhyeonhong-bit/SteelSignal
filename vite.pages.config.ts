@@ -2,7 +2,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: "/SteelSignal/",
+  base: process.env.PAGES_BASE ?? "/SteelSignal/",
   plugins: [react()],
   publicDir: "../public",
   build: {
