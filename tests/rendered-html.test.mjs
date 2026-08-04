@@ -22,7 +22,8 @@ test("server-renders the Arctic research dashboard at the root", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /<title>북극 에너지 패권/);
-  assert.match(html, /property="og:image" content="https:\/\/suhyeonhong-bit\.github\.io\/SteelSignal\/arctic-og\.png"/);
+  assert.match(html, /property="og:image" content="https:\/\/steel-signal\.vercel\.app\/arctic-og\.png"/);
+  assert.match(html, /rel="canonical" href="https:\/\/steel-signal\.vercel\.app\/"/);
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
   assert.match(html, /ARCTIC \/ YAMAL/);
   assert.match(html, /북극 에너지 패권,/);
