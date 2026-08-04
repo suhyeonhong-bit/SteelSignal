@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://suhyeonhong-bit.github.io/SteelSignal/"),
+  metadataBase: new URL("https://steel-signal.vercel.app/"),
   title: "북극 에너지 패권, 이미 결정됐는가? | ARCTIC / YAMAL",
   description: "YAMAL LNG와 미국 북극 전략을 공식 데이터와 연구자 분석으로 추적하는 연구 대시보드.",
   alternates: { canonical: "./" },
@@ -24,17 +24,17 @@ export const metadata: Metadata = {
     siteName: "ARCTIC / YAMAL",
     title: "북극 에너지 패권, 이미 결정됐는가?",
     description: "YAMAL LNG와 미국 북극 전략을 공식 데이터와 연구자 분석으로 추적하는 연구 대시보드.",
-    images: [{ url: "https://suhyeonhong-bit.github.io/SteelSignal/arctic-og.png", width: 1731, height: 909, alt: "북극 에너지 패권 연구 대시보드 표지" }],
+    images: [{ url: "https://steel-signal.vercel.app/arctic-og.png", width: 1731, height: 909, alt: "북극 에너지 패권 연구 대시보드 표지" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "북극 에너지 패권, 이미 결정됐는가?",
     description: "YAMAL LNG와 미국 북극 전략을 공식 데이터와 연구자 분석으로 추적합니다.",
-    images: ["https://suhyeonhong-bit.github.io/SteelSignal/arctic-og.png"],
+    images: ["https://steel-signal.vercel.app/arctic-og.png"],
   },
   icons: {
-    icon: "https://suhyeonhong-bit.github.io/SteelSignal/favicon.svg",
-    shortcut: "https://suhyeonhong-bit.github.io/SteelSignal/favicon.svg",
+    icon: "https://steel-signal.vercel.app/favicon.svg",
+    shortcut: "https://steel-signal.vercel.app/favicon.svg",
   },
 };
 

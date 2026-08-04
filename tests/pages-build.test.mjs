@@ -23,9 +23,12 @@ test("builds the GitHub Pages artifact", async () => {
   const steelHtml = await readFile(new URL("steel/index.html", output), "utf8");
   assert.match(arcticHtml, /lang="ko"/);
   assert.match(arcticHtml, /북극 에너지 패권/);
-  assert.match(arcticHtml, /property="og:image" content="https:\/\/suhyeonhong-bit\.github\.io\/SteelSignal\/arctic-og\.png"/);
+  assert.match(arcticHtml, /rel="canonical" href="https:\/\/steel-signal\.vercel\.app\/"/);
+  assert.match(arcticHtml, /property="og:image" content="https:\/\/steel-signal\.vercel\.app\/arctic-og\.png"/);
   assert.match(arcticHtml, /\/SteelSignal\/assets\/[^"']+\.js/);
   assert.match(steelHtml, /STEEL SIGNAL/);
+  assert.match(steelHtml, /rel="canonical" href="https:\/\/steel-signal\.vercel\.app\/steel\/"/);
+  assert.match(steelHtml, /property="og:image" content="https:\/\/steel-signal\.vercel\.app\/og\.png"/);
   assert.match(steelHtml, /\/SteelSignal\/assets\/[^"']+\.js/);
 
   const files = await walk(outputPath);

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
     siteName: "STEEL SIGNAL",
     title: "STEEL SIGNAL | 금리와 철강 가격의 흐름",
     description: "한국과 미국의 금리, 철강 생산자물가를 한눈에 읽는 월별 시장 브리프.",
-    images: [{ url: "https://suhyeonhong-bit.github.io/SteelSignal/og.png", width: 1200, height: 630, alt: "STEEL SIGNAL 대시보드 표지" }],
+    images: [{ url: "https://steel-signal.vercel.app/og.png", width: 1200, height: 630, alt: "STEEL SIGNAL 대시보드 표지" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "STEEL SIGNAL | 금리와 철강 가격의 흐름",
     description: "한국과 미국의 금리, 철강 생산자물가를 한눈에 읽는 월별 시장 브리프.",
-    images: ["https://suhyeonhong-bit.github.io/SteelSignal/og.png"],
+    images: ["https://steel-signal.vercel.app/og.png"],
   },
 };
 
