@@ -9,6 +9,7 @@
   --arctic-blue: #235f8f;
   --arctic-blue-soft: #e8f1f7;
   --arctic-focus: #0f6cbd;
+  --arctic-red: #ef4444;
 }
 
 .arctic-page { min-height: 100vh; background: var(--arctic-white); color: var(--arctic-navy); font-family: var(--font-geist-sans), "Pretendard Variable", Pretendard, Arial, sans-serif; }
@@ -21,17 +22,19 @@
 .arctic-brand { flex: none; color: var(--arctic-navy); font-size: 12px; font-weight: 850; letter-spacing: .14em; text-decoration: none; }
 .arctic-nav nav { display: flex; align-items: center; gap: 3px; overflow-x: auto; scrollbar-width: none; white-space: nowrap; }
 .arctic-nav nav::-webkit-scrollbar { display: none; }
-.arctic-nav nav a { flex: none; padding: 8px 10px; color: var(--arctic-muted); font-size: 12px; text-decoration: none; }
+.arctic-nav nav a { flex: none; padding: 8px 10px; color: #000; font-family: "Pretendard Variable", Pretendard, var(--font-geist-sans), Arial, sans-serif; font-size: 12px; text-decoration: none; }
 .arctic-nav nav a:hover { color: var(--arctic-navy); }
-.arctic-nav .steel-link { margin-left: 8px; border-left: 1px solid var(--arctic-rule); color: var(--arctic-copper-dark); font-weight: 750; }
+.arctic-nav .steel-link { margin-left: 8px; border-left: 1px solid var(--arctic-rule); color: #000; font-weight: 750; }
 .arctic-page section[id] { scroll-margin-top: 88px; }
-.arctic-hero { padding: 92px 0 52px; }
+.arctic-hero { padding: 92px 0 52px; background: var(--arctic-cool); }
 .arctic-kicker { margin: 0 0 14px; color: var(--arctic-copper-dark); font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
 .arctic-kicker.is-blue { color: var(--arctic-blue); }
-.arctic-hero h1 { max-width: 960px; margin: 0; font-size: clamp(3.2rem, 7vw, 6.6rem); font-weight: 850; letter-spacing: -.07em; line-height: .94; }
-.arctic-hero h1 em { color: var(--arctic-copper); font-style: normal; }
-.hero-deck { max-width: 790px; margin: 30px 0 0; color: var(--arctic-muted); font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.85; }
-.hero-sources { margin: 30px 0 0; color: #788797; font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 10px; letter-spacing: .06em; }
+.arctic-hero .arctic-kicker { margin-left: clamp(0px, 1vw, 16px); color: #000; font-family: "Pretendard Variable", Pretendard, var(--font-geist-sans), Arial, sans-serif; }
+.arctic-hero h1 { max-width: 704px; margin: 0 0 0 clamp(0px, 3.2vw, 60px); color: #000; font-size: clamp(3.2rem, 7vw, 6.6rem); font-weight: 850; letter-spacing: -.042em; line-height: .94; }
+.arctic-hero h1 em { color: var(--arctic-red); font-style: normal; }
+.hero-deck { max-width: 900px; margin: 30px 0 0 clamp(0px, 5.5vw, 105px); color: var(--arctic-muted); font-family: "Pretendard Variable", Pretendard, var(--font-geist-sans), Arial, sans-serif; font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.85; }
+.hero-deck-line { display: block; }
+.hero-sources { margin: 30px 0 0 clamp(0px, 1.9vw, 35px); color: #788797; font-family: "Pretendard Variable", Pretendard, var(--font-geist-sans), Arial, sans-serif; font-size: 10px; letter-spacing: .06em; }
 .source-strip { display: grid; grid-template-columns: 185px 1fr; gap: 18px 32px; padding: 22px 0; border-top: 1px solid var(--arctic-rule); border-bottom: 1px solid var(--arctic-rule); }
 .source-strip-label span, .source-strip-label strong { display: block; }
 .source-strip-label span { color: var(--arctic-copper-dark); font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 10px; letter-spacing: .15em; }
@@ -181,7 +184,10 @@
   .arctic-nav nav { width: 100%; }
   .arctic-nav nav a { padding: 6px 8px; font-size: 11px; }
   .arctic-hero { padding: 62px 0 38px; }
-  .arctic-hero h1 { font-size: clamp(3rem, 14vw, 5rem); }
+  .arctic-hero .arctic-kicker, .arctic-hero h1, .hero-deck, .hero-sources { margin-left: 0; }
+  .arctic-hero h1 { max-width: none; font-size: clamp(3rem, 14vw, 5rem); }
+  .hero-deck-line { display: inline; }
+  .hero-deck-line:not(:last-child)::after { content: " "; }
   .hegemony-top, .watch-head { flex-direction: column; }
   .year-tabs { width: 100%; }
   .year-tabs button { flex: 1; }

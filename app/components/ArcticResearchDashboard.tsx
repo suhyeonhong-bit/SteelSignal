@@ -140,7 +140,16 @@ export default function ArcticResearchDashboard() {
   return <div className="arctic-page">
     <header className="arctic-nav"><a className="arctic-brand" href="#overview">ARCTIC / YAMAL</a><nav aria-label="연구 섹션">{navItems.map(([label, href]) => <a key={href} href={href}>{label}</a>)}<a className="steel-link" href="./steel/">STEEL SIGNAL ↗</a></nav></header>
     <main>
-      <section className="arctic-hero" id="overview"><p className="arctic-kicker">2022150047 · 홍수현 · RESEARCH DASHBOARD</p><h1>북극 에너지 패권,<br />이미 <em>결정</em>됐는가?</h1><p className="hero-deck">YAMAL LNG의 지정학적 위력은 어디서 비롯되며, 미국의 북극 대응 전략은 이를 실질적으로 견제할 수 있는가 — 900억 배럴의 미발견 자원을 둘러싼 러시아·중국·미국의 북극 삼각 경쟁을 추적한다.</p><p className="hero-sources">SOURCE · USGS 2008 / Arctic Council / EIA / OFAC / EU / NSIDC / CHNL / DOE</p></section>
+      <section className="arctic-hero" id="overview">
+        <p className="arctic-kicker">2022150047 · 홍수현 · RESEARCH DASHBOARD</p>
+        <h1>북극 에너지 패권,<br />이미 <em>결정</em>됐는가?</h1>
+        <p className="hero-deck">
+          <span className="hero-deck-line">YAMAL LNG의 지정학적 위력은 어디에서 비롯되는가?</span>
+          <span className="hero-deck-line">미국의 북극 대응 전략은 이를 실질적으로 견제할 수 있는가</span>
+          <span className="hero-deck-line">— 900억 배럴의 미발견 자원을 둘러싼 러시아·중국·미국의 북극 삼각 경쟁을 추적한다.</span>
+        </p>
+        <p className="hero-sources">SOURCE · USGS 2008 / Arctic Council / EIA / OFAC / EU / NSIDC / CHNL / DOE</p>
+      </section>
       <SourceStrip data={data} mode={mode} />
       <HegemonyGauge />
 
