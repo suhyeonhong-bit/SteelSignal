@@ -23,6 +23,8 @@ test("keeps the approved WebEditor hero synchronized with the React dashboard", 
 
   assert.equal((component.match(/className="hero-deck-line"/g) || []).length, 3);
   assert.equal((webeditor.match(/class="hero-deck-line"/g) || []).length, 3);
+  assert.equal((component.match(/<\/span>\{" "\}/g) || []).length, 2);
+  assert.equal((webeditor.match(/<\/span> <span class="hero-deck-line">/g) || []).length, 2);
 
   for (const source of [css, webeditor]) {
     assert.match(source, /--arctic-red:\s*#ef4444/);
@@ -30,9 +32,16 @@ test("keeps the approved WebEditor hero synchronized with the React dashboard", 
     assert.match(source, /\.arctic-hero h1 em\s*\{[^}]*var\(--arctic-red\)/s);
     assert.match(source, /\.arctic-nav nav a\s*\{[^}]*color:\s*#000/s);
     assert.match(source, /\.hero-deck-line\s*\{[^}]*display:\s*block/s);
-    assert.match(source, /clamp\(0px,\s*5\.5vw,\s*105px\)/);
+    for (const offset of [
+      /clamp\(0px,\s*1vw,\s*16px\)/,
+      /clamp\(0px,\s*3\.2vw,\s*60px\)/,
+      /clamp\(0px,\s*5\.5vw,\s*105px\)/,
+      /clamp\(0px,\s*1\.9vw,\s*35px\)/,
+    ]) assert.match(source, offset);
     assert.match(source, /@media \(max-width:\s*760px\)[\s\S]*\.hero-deck-line\s*\{[^}]*display:\s*inline/s);
     assert.match(source, /@media \(max-width:\s*760px\)[\s\S]*\.arctic-hero h1\s*\{[^}]*font-size:\s*clamp\(3rem,\s*13\.5vw,\s*5rem\)/s);
+    assert.match(source, /\.arctic-hero \.arctic-kicker,\s*\.arctic-hero h1,\s*\.hero-deck,\s*\.hero-sources\s*\{[^}]*margin-left:\s*0/s);
+    assert.doesNotMatch(source, /\.hero-deck-line:not\(:last-child\)::after/);
   }
 
   assert.doesNotMatch(webeditor, /data-editor-slide|webeditor-canvas-size|webeditor-html-sizing/);

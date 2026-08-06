@@ -187,7 +187,6 @@
   .arctic-hero .arctic-kicker, .arctic-hero h1, .hero-deck, .hero-sources { margin-left: 0; }
   .arctic-hero h1 { max-width: none; font-size: clamp(3rem, 13.5vw, 5rem); }
   .hero-deck-line { display: inline; }
-  .hero-deck-line:not(:last-child)::after { content: " "; }
   .hegemony-top, .watch-head { flex-direction: column; }
   .year-tabs { width: 100%; }
   .year-tabs button { flex: 1; }
