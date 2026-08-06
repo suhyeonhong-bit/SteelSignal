@@ -12,8 +12,9 @@
     "build:pages": "vite build --config vite.pages.config.ts",
     "build:vercel": "PAGES_BASE=/ vite build --config vite.pages.config.ts",
     "test:unit": "node --test tests/arctic-data.test.mjs",
+    "test:webeditor": "node --test tests/webeditor-export.test.mjs",
     "test:pages": "npm run build:pages && node --test tests/pages-build.test.mjs tests/pages-workflow.test.mjs",
-    "test": "npm run test:unit && npm run build && node --test tests/rendered-html.test.mjs",
+    "test": "npm run test:unit && npm run test:webeditor && npm run build && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern pages-dist",
     "db:generate": "drizzle-kit generate"
   },
