@@ -81,6 +81,7 @@ test("ships a standalone semantic Arctic dashboard for WebEditor", async () => {
   assert.match(html, /^<!doctype html>/i);
   assert.match(html, /<html lang="ko">/);
   assert.match(html, /<meta name="viewport"/);
+  assert.match(html, /<link rel="icon" type="image\/svg\+xml" href="data:image\/svg\+xml,/);
   assert.match(html, /<style id="arctic-styles">[\s\S]+<\/style>/);
   assert.doesNotMatch(html, /<link[^>]+rel=["']stylesheet/i);
   assert.doesNotMatch(html, /<script[^>]+src=/i);
