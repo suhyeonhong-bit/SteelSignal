@@ -60,6 +60,7 @@ function createRuntimeHarness(html) {
       const plot = selector.match(/^\[data-region="(.+)"\](?: \.line-plot)?$/)?.[1];
       return plots.get(plot) ?? regions.get(plot) ?? null;
     },
+    querySelectorAll: () => [],
     createDocumentFragment: () => createNode(),
     createElement: () => createNode(),
     createElementNS: () => createNode(),
@@ -84,7 +85,6 @@ test("ships a standalone semantic Arctic dashboard for WebEditor", async () => {
   assert.doesNotMatch(html, /<link[^>]+rel=["']stylesheet/i);
   assert.doesNotMatch(html, /<script[^>]+src=/i);
   assert.doesNotMatch(html, /(?:src|href)=["']\.\.?\//i);
-  assert.doesNotMatch(html, /<button[^>]+aria-pressed=/i);
 
   for (const id of ["overview", "intro", "yamal", "usa", "compare", "korea"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
@@ -105,8 +105,8 @@ test("ships a standalone semantic Arctic dashboard for WebEditor", async () => {
   assert.match(html, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(html, /@media print/);
   assert.match(html, /@media print\s*\{[^}]*\.arctic-nav,\s*\.year-tabs/);
-  assert.match(html, /2027년[\s\S]{0,160}RUSSIA · YAMAL[\s\S]{0,80}60%[\s\S]{0,80}USA · ALASKA[\s\S]{0,80}40%/);
-  assert.match(html, /2033년[\s\S]{0,160}RUSSIA · YAMAL[\s\S]{0,80}48%[\s\S]{0,80}USA · ALASKA[\s\S]{0,80}52%/);
+  assert.match(html, /2027:\s*\{ ru: 60, us: 40/);
+  assert.match(html, /2033:\s*\{ ru: 48, us: 52/);
 });
 
 test("embeds a validated fallback and safely refreshes the public data contract", async () => {
@@ -181,4 +181,25 @@ test("clears stale snapshot metrics and plots for valid partial live payloads", 
   assert.equal(harness.bindings.get("energy.usLngExports.latest.value").textContent, "0.51");
   assert.equal(harness.bindings.get("seaIce.latest.extent").textContent, "7.111");
   for (const plot of harness.plots.values()) assert.deepEqual(plot.children, []);
+});
+
+test("keeps researcher scenarios interactive and WebEditor-safe", async () => {
+  const html = await readExport();
+  const runtime = extractScript(html, "arctic-runtime");
+
+  for (const year of [2025, 2027, 2033]) {
+    assert.match(html, new RegExp(`data-year=["']${year}["']`));
+  }
+  assert.match(html, /aria-pressed="true"/);
+  assert.match(runtime, /function selectHegemonyYear\(/);
+  assert.match(runtime, /addEventListener\(["']click["']/);
+  assert.match(runtime, /setAttribute\(["']aria-pressed["']/);
+  assert.match(html, /data-bind="hegemony\.russia"/);
+  assert.match(html, /data-bind="hegemony\.usa"/);
+  assert.match(html, /data-bind="hegemony\.note"/);
+  assert.match(html, /연구자 추정 · 자동 갱신 아님/);
+  assert.match(html, /WebEditor:[^\n]+data-bind[^\n]+data-region/);
+  assert.match(html, /role="img"/);
+  assert.match(html, /aria-label="EIA 실적과 전망 범례"/);
+  assert.match(html, /tabindex="0"[^>]+aria-label="4A 비교표 가로 스크롤"/);
 });
