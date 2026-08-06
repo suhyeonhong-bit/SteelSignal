@@ -32,6 +32,7 @@ test("keeps the approved WebEditor hero synchronized with the React dashboard", 
     assert.match(source, /\.hero-deck-line\s*\{[^}]*display:\s*block/s);
     assert.match(source, /clamp\(0px,\s*5\.5vw,\s*105px\)/);
     assert.match(source, /@media \(max-width:\s*760px\)[\s\S]*\.hero-deck-line\s*\{[^}]*display:\s*inline/s);
+    assert.match(source, /@media \(max-width:\s*760px\)[\s\S]*\.arctic-hero h1\s*\{[^}]*font-size:\s*clamp\(3rem,\s*13\.5vw,\s*5rem\)/s);
   }
 
   assert.doesNotMatch(webeditor, /data-editor-slide|webeditor-canvas-size|webeditor-html-sizing/);

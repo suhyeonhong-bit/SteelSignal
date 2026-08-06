@@ -185,7 +185,7 @@
   .arctic-nav nav a { padding: 6px 8px; font-size: 11px; }
   .arctic-hero { padding: 62px 0 38px; }
   .arctic-hero .arctic-kicker, .arctic-hero h1, .hero-deck, .hero-sources { margin-left: 0; }
-  .arctic-hero h1 { max-width: none; font-size: clamp(3rem, 14vw, 5rem); }
+  .arctic-hero h1 { max-width: none; font-size: clamp(3rem, 13.5vw, 5rem); }
   .hero-deck-line { display: inline; }
   .hero-deck-line:not(:last-child)::after { content: " "; }
   .hegemony-top, .watch-head { flex-direction: column; }
